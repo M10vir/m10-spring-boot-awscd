@@ -1,0 +1,15 @@
+version: 0.0
+os: linux
+files:
+  - source: /
+    destination: /opt/codedeploy-agent/deployment-root/deployment-archive
+hooks:
+  ApplicationStop:
+    - location: server_stop.sh
+      timeout: 300
+      runas: root
+  ApplicationStart:
+    - location: server_start.sh
+      timeout: 300
+      runas: root
+

@@ -3,7 +3,7 @@ version: 0.2
 phases:
   install:
     runtime-versions:
-      java: corretto11
+      java: corretto17
     commands:
       - echo "Installing dependencies..."
       - mvn install
@@ -17,4 +17,3 @@ artifacts:
     - appspec.yml
     - server_stop.sh
     - server_start.sh
-

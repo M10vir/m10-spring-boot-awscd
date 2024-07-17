@@ -7,14 +7,18 @@ phases:
       - yum -y update
       - echo "Installing Amazon Corretto 22..."
       - yum -y install java-22-amazon-corretto-devel
-      - echo "Setting environment variables..."
-      - ./set-env.sh
+      - echo "Setting JAVA_HOME..."
+      - export JAVA_HOME=/usr/lib/jvm/java-22-amazon-corretto
+      - export PATH=$JAVA_HOME/bin:$PATH
+      - echo "JAVA_HOME is set to $JAVA_HOME"
       - echo "Installing dependencies..."
-      - source ./set-env.sh && mvn install
+      - mvn install
   build:
     commands:
       - echo "Building the project..."
-      - source ./set-env.sh && mvn clean package
+      - export JAVA_HOME=/usr/lib/jvm/java-22-amazon-corretto
+      - export PATH=$JAVA_HOME/bin:$PATH
+      - mvn clean package
 artifacts:
   files:
     - target/demo-0.0.1-SNAPSHOT.jar

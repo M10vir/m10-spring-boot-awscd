@@ -1,10 +1,10 @@
-package com.example.demo;
+package com.thegroup.group.Qauto;
 
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;
 
 @SpringBootTest
-class DemoApplicationTests {
+class QautoApplicationTests {
 
 	@Test
 	void contextLoads() {

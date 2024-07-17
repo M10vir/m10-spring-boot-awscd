@@ -6,10 +6,14 @@ phases:
       java: corretto22
     commands:
       - echo "Installing dependencies..."
+      - export JAVA_HOME=/usr/lib/jvm/java-22-amazon-corretto
+      - export PATH=$JAVA_HOME/bin:$PATH
       - mvn install
   build:
     commands:
       - echo "Building the project..."
+      - export JAVA_HOME=/usr/lib/jvm/java-22-amazon-corretto
+      - export PATH=$JAVA_HOME/bin:$PATH
       - mvn clean package
 artifacts:
   files:
@@ -17,3 +21,4 @@ artifacts:
     - appspec.yml
     - server_stop.sh
     - server_start.sh
+

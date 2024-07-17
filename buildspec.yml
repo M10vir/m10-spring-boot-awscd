@@ -3,18 +3,18 @@ version: 0.2
 phases:
   install:
     runtime-versions:
-      java: corretto-22
+      java: corretto22
     commands:
       - echo "Installing dependencies..."
-      - yum -y install java-22-amazon-corretto-devel.x86_64
-      - JAVA_HOME=/usr/lib/jvm/java-22-amazon-corretto
-      - PATH=$JAVA_HOME/bin:$PATH
+      - yum -y install java-22-amazon-corretto-devel
+      - export JAVA_HOME=/usr/lib/jvm/java-22-amazon-corretto
+      - export PATH=$JAVA_HOME/bin:$PATH
       - mvn install
   build:
     commands:
       - echo "Building the project..."
-      - JAVA_HOME=/usr/lib/jvm/java-22-amazon-corretto
-      - PATH=$JAVA_HOME/bin:$PATH
+      - export JAVA_HOME=/usr/lib/jvm/java-22-amazon-corretto
+      - export PATH=$JAVA_HOME/bin:$PATH
       - mvn clean package
 artifacts:
   files:

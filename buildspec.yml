@@ -1,45 +1,18 @@
 version: 0.2
 
-env:
-  variables:
-    JAVA_HOME: /usr/lib/jvm/java-17-amazon-corretto
-    PATH: $JAVA_HOME/bin:$PATH
-
 phases:
   install:
-    commands:
-      - echo "Updating package lists..."
-      - yum -y update
-      - echo "Installing Amazon Corretto 17..."
-      - yum -y install java-17-amazon-corretto-devel
-      - echo "Installing Maven..."
-      - yum -y install maven
-
-  pre_build:
-    commands:
-      - echo "Setting JAVA_HOME and PATH..."
-      - export JAVA_HOME=/usr/lib/jvm/java-17-amazon-corretto
-      - export PATH=$JAVA_HOME/bin:$PATH
-      - echo "JAVA_HOME is set to $JAVA_HOME"
-      - echo "PATH is set to $PATH"
-      - echo "Checking Maven version..."
-      - java -version
-      - echo $JAVA_HOME
-      - echo $PATH
-      - env
-      - mvn --version
-
+    runtime-versions:
+      java: corretto17
   build:
     commands:
-      - echo "Build started on `date`"
-      - echo "Compiling the Maven project..."
-      - mvn compile
-      - echo "Running tests..."
-      - mvn test
-      - echo "Packaging the application..."
-      - mvn package
-
+      - mvn clean install
+  post_build:
+    commands:
+      - echo Build completed
 artifacts:
   files:
-    - '**/*'
- 
+    - target/*.jar
+    - scripts/*.sh
+    - appspec.yml
+  discard-paths: yes 

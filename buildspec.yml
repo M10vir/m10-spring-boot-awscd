@@ -12,12 +12,13 @@ phases:
   pre_build:
     commands:
       - echo "Setting up environment variables script..."
-      - echo 'export JAVA_HOME=/usr/lib/jvm/java-17-amazon-corretto' > setenv.sh
-      - echo 'export PATH=$JAVA_HOME/bin:$PATH' >> setenv.sh
-      - echo 'JAVA_HOME is set to $JAVA_HOME' >> setenv.sh
-      - echo 'PATH is set to $PATH' >> setenv.sh
-      - echo 'Environment variables:' >> setenv.sh
-      - echo 'env' >> setenv.sh
+      - |
+        echo 'export JAVA_HOME=/usr/lib/jvm/java-17-amazon-corretto' > setenv.sh
+        echo 'export PATH=$JAVA_HOME/bin:$PATH' >> setenv.sh
+        echo 'echo JAVA_HOME is set to $JAVA_HOME' >> setenv.sh
+        echo 'echo PATH is set to $PATH' >> setenv.sh
+        echo 'echo Environment variables:' >> setenv.sh
+        echo 'env' >> setenv.sh
       - cat setenv.sh
       - source setenv.sh
       - echo "JAVA_HOME: $JAVA_HOME"

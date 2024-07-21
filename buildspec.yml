@@ -1,23 +1,30 @@
 version: 0.2
 
+env:
+  variables:
+    JAVA_HOME: /usr/lib/jvm/java-17-amazon-corretto
+    PATH: /usr/lib/jvm/java-17-amazon-corretto/bin:$PATH
+
 phases:
   install:
     commands:
       - echo "Updating package lists..."
-      - yum -y update
+      - sudo yum -y update
       - echo "Installing Amazon Corretto 17..."
-      - yum -y install java-17-amazon-corretto-devel
+      - sudo yum -y install java-17-amazon-corretto-devel
   pre_build:
     commands:
       - echo "Setting JAVA_HOME and PATH..."
       - export JAVA_HOME=/usr/lib/jvm/java-17-amazon-corretto
       - export PATH=$JAVA_HOME/bin:$PATH
       - echo "JAVA_HOME is set to $JAVA_HOME"
+      - ls -alh
       - ./verify-environment.sh
   build:
     commands:
       - echo "Building the project..."
       - mvn clean install
+
 artifacts:
   files:
     - target/demo-0.0.1-SNAPSHOT.jar

@@ -1,0 +1,31 @@
+version: 0.2
+
+phases:
+  install:
+    commands:
+      - echo "Updating package lists..."
+      - yum -y update
+      - echo "Installing Amazon Corretto 17..."
+      - yum -y install java-17-amazon-corretto-devel
+      - echo "Installing Maven..."
+      - yum -y install maven
+  pre_build:
+    commands:
+      - echo "Setting JAVA_HOME and PATH..."
+      - export JAVA_HOME=/usr/lib/jvm/java-17-amazon-corretto
+      - export PATH=$JAVA_HOME/bin:$PATH
+      - echo "JAVA_HOME is set to $JAVA_HOME"
+      - echo "Maven is set to $(mvn --version)"
+      - ./verify-environment.sh
+  build:
+    commands:
+      - echo "Building the project..."
+      - mvn clean install
+
+artifacts:
+  files:
+    - target/demo-0.0.1-SNAPSHOT.jar
+    - appspec.yml
+    - server_stop.sh
+    - server_start.sh
+

@@ -9,9 +9,9 @@ phases:
   install:
     commands:
       - echo "Updating package lists..."
-      - sudo yum -y update
+      - yum -y update
       - echo "Installing Amazon Corretto 17..."
-      - sudo yum -y install java-17-amazon-corretto-devel
+      - yum -y install java-17-amazon-corretto-devel
   pre_build:
     commands:
       - echo "Setting JAVA_HOME and PATH..."

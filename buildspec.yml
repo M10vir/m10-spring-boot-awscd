@@ -6,9 +6,9 @@ phases:
       - echo "Updating package lists..."
       - yum -y update
       - echo "Installing Amazon Corretto 21..."
-      - yum -y install java-21-amazon-corretto-devel
+      - yum -y install java-17-amazon-corretto-devel
       - echo "Setting JAVA_HOME..."
-      - export JAVA_HOME=/usr/lib/jvm/java-21-amazon-corretto
+      - export JAVA_HOME=/usr/lib/jvm/java-17-amazon-corretto
       - export PATH=$JAVA_HOME/bin:$PATH
       - echo "JAVA_HOME is set to $JAVA_HOME"
       - echo "Installing dependencies..."
@@ -16,7 +16,7 @@ phases:
   build:
     commands:
       - echo "Building the project..."
-      - export JAVA_HOME=/usr/lib/jvm/java-21-amazon-corretto
+      - export JAVA_HOME=/usr/lib/jvm/java-17-amazon-corretto
       - export PATH=$JAVA_HOME/bin:$PATH
       - mvn clean package
 artifacts:

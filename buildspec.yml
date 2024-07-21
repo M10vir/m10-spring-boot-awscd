@@ -9,16 +9,16 @@ phases:
   install:
     commands:
       - echo "Updating package lists..."
-      - yum -y update
+      - sudo yum -y update
       - echo "Installing Amazon Corretto 17..."
-      - yum -y install java-17-amazon-corretto-devel
+      - sudo yum -y install java-17-amazon-corretto-devel
       - echo "JAVA_HOME is set to $JAVA_HOME"
       - echo "Installing dependencies..."
-      - mvn install
+      - sudo mvn install
   build:
     commands:
       - echo "Building the project..."
-      - mvn clean package
+      - sudo mvn clean package
 artifacts:
   files:
     - target/demo-0.0.1-SNAPSHOT.jar

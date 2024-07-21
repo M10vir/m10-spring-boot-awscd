@@ -17,21 +17,10 @@ phases:
       - export PATH=$JAVA_HOME/bin:$PATH
       - echo "JAVA_HOME is set to $JAVA_HOME"
       - echo "PATH is set to $PATH"
-      - echo "Creating and running script to verify environment variables..."
-      - |
-        cat << 'EOF' > verify_env.sh
-        #!/bin/bash
-        export JAVA_HOME=/usr/lib/jvm/java-17-amazon-corretto
-        export PATH=$JAVA_HOME/bin:$PATH
-        echo "JAVA_HOME is set to $JAVA_HOME"
-        echo "PATH is set to $PATH"
-        echo "Checking Java version..."
-        java -version
-        echo "Checking Maven version..."
-        mvn --version
-        EOF
-      - chmod +x verify_env.sh
-      - ./verify_env.sh
+      - echo "Checking Maven version..."
+      - source ~/.bashrc
+      - java -version
+      - mvn --version
 
   build:
     commands:

@@ -1,10 +1,5 @@
 version: 0.2
 
-env:
-  variables:
-    JAVA_HOME: /usr/lib/jvm/java-17-amazon-corretto
-    PATH: /usr/lib/jvm/java-17-amazon-corretto/bin:$PATH
-
 phases:
   install:
     commands:
@@ -12,13 +7,18 @@ phases:
       - yum -y update
       - echo "Installing Amazon Corretto 17..."
       - yum -y install java-17-amazon-corretto-devel
+      - echo "Installing Maven..."
+      - wget https://www-us.apache.org/dist/maven/maven-3/3.8.6/binaries/apache-maven-3.8.6-bin.tar.gz
+      - tar xzf apache-maven-3.8.6-bin.tar.gz -C /opt/
+      - ln -s /opt/apache-maven-3.8.6 /opt/maven
+      - export PATH=/opt/maven/bin:$PATH
   pre_build:
     commands:
       - echo "Setting JAVA_HOME and PATH..."
       - export JAVA_HOME=/usr/lib/jvm/java-17-amazon-corretto
-      - export PATH=$JAVA_HOME/bin:$PATH
+      - export PATH=$JAVA_HOME/bin:/opt/maven/bin:$PATH
       - echo "JAVA_HOME is set to $JAVA_HOME"
-      - ls -alh
+      - echo "Maven is set to $(mvn --version)"
       - ./verify-environment.sh
   build:
     commands:
@@ -31,3 +31,4 @@ artifacts:
     - appspec.yml
     - server_stop.sh
     - server_start.sh
+

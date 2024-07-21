@@ -15,17 +15,20 @@ phases:
       - export JAVA_HOME=/usr/lib/jvm/java-17-amazon-corretto
       - export PATH=$JAVA_HOME/bin:$PATH
       - echo "JAVA_HOME is set to $JAVA_HOME"
-      - echo "Maven is set to $(mvn --version)"
+      - echo "PATH is set to $PATH"
+      - echo "Maven version:"
+      - mvn --version
       - ./verify-environment.sh
   build:
     commands:
-      - echo "Building the project..."
-      - mvn clean install
-
+      - echo "Build started on `date`"
+      - echo "Compiling the Maven project..."
+      - mvn compile
+      - echo "Running tests..."
+      - mvn test
+      - echo "Packaging the application..."
+      - mvn package
 artifacts:
   files:
-    - target/demo-0.0.1-SNAPSHOT.jar
-    - appspec.yml
-    - server_stop.sh
-    - server_start.sh
+    - '**/*'
 

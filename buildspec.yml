@@ -17,18 +17,31 @@ phases:
       - export PATH=$JAVA_HOME/bin:$PATH
       - echo "JAVA_HOME is set to $JAVA_HOME"
       - echo "PATH is set to $PATH"
-      - echo "Checking Maven version..."
-      - JAVA_HOME=/usr/lib/jvm/java-17-amazon-corretto mvn --version
+      - echo "Creating and running script to verify environment variables..."
+      - |
+        cat << 'EOF' > verify_env.sh
+        #!/bin/bash
+        export JAVA_HOME=/usr/lib/jvm/java-17-amazon-corretto
+        export PATH=$JAVA_HOME/bin:$PATH
+        echo "JAVA_HOME is set to $JAVA_HOME"
+        echo "PATH is set to $PATH"
+        echo "Checking Java version..."
+        java -version
+        echo "Checking Maven version..."
+        mvn --version
+        EOF
+      - chmod +x verify_env.sh
+      - ./verify_env.sh
 
   build:
     commands:
       - echo "Build started on `date`"
       - echo "Compiling the Maven project..."
-      - JAVA_HOME=/usr/lib/jvm/java-17-amazon-corretto mvn compile
+      - mvn compile
       - echo "Running tests..."
-      - JAVA_HOME=/usr/lib/jvm/java-17-amazon-corretto mvn test
+      - mvn test
       - echo "Packaging the application..."
-      - JAVA_HOME=/usr/lib/jvm/java-17-amazon-corretto mvn package
+      - mvn package
 
 artifacts:
   files:

@@ -1,5 +1,9 @@
 version: 0.2
 
+env:
+  variables:
+    JAVA_HOME: /usr/lib/jvm/java-17-amazon-corretto
+
 phases:
   install:
     commands:
@@ -18,19 +22,20 @@ phases:
       - echo "JAVA_HOME is set to $JAVA_HOME"
       - echo "PATH is set to $PATH"
       - echo "Checking Maven version..."
-      - source ~/.bashrc
       - java -version
-      - mvn --version
+      - echo $JAVA_HOME
+      - echo $PATH
+      - JAVA_HOME=/usr/lib/jvm/java-17-amazon-corretto mvn --version
 
   build:
     commands:
       - echo "Build started on `date`"
       - echo "Compiling the Maven project..."
-      - mvn compile
+      - JAVA_HOME=/usr/lib/jvm/java-17-amazon-corretto mvn compile
       - echo "Running tests..."
-      - mvn test
+      - JAVA_HOME=/usr/lib/jvm/java-17-amazon-corretto mvn test
       - echo "Packaging the application..."
-      - mvn package
+      - JAVA_HOME=/usr/lib/jvm/java-17-amazon-corretto mvn package
 
 artifacts:
   files:

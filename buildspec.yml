@@ -16,11 +16,16 @@ phases:
       - export PATH=$JAVA_HOME/bin:$PATH
       - echo "JAVA_HOME is set to $JAVA_HOME"
       - echo "PATH is set to $PATH"
+      - echo "Environment variables:"
+      - env
       - echo "Maven version:"
       - mvn --version
       - ./verify-environment.sh
   build:
     commands:
+      - echo "Setting JAVA_HOME and PATH..."
+      - export JAVA_HOME=/usr/lib/jvm/java-17-amazon-corretto
+      - export PATH=$JAVA_HOME/bin:$PATH
       - echo "Build started on `date`"
       - echo "Compiling the Maven project..."
       - mvn compile
@@ -31,4 +36,4 @@ phases:
 artifacts:
   files:
     - '**/*'
-
+ 

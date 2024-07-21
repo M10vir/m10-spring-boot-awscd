@@ -17,19 +17,30 @@ phases:
       - export PATH=$JAVA_HOME/bin:$PATH
       - echo "JAVA_HOME is set to $JAVA_HOME"
       - echo "PATH is set to $PATH"
-      - echo "Checking Maven version..."
-      - java -version
-      - mvn --version
+      - echo "Creating script to run Maven commands..."
+      - |
+        cat << 'EOF' > run_maven.sh
+        #!/bin/bash
+        export JAVA_HOME=/usr/lib/jvm/java-17-amazon-corretto
+        export PATH=$JAVA_HOME/bin:$PATH
+        echo "JAVA_HOME is set to $JAVA_HOME"
+        echo "PATH is set to $PATH"
+        echo "Checking Maven version..."
+        java -version
+        mvn --version
+        EOF
+      - chmod +x run_maven.sh
+      - ./run_maven.sh
 
   build:
     commands:
       - echo "Build started on `date`"
       - echo "Compiling the Maven project..."
-      - mvn compile
+      - ./run_maven.sh mvn compile
       - echo "Running tests..."
-      - mvn test
+      - ./run_maven.sh mvn test
       - echo "Packaging the application..."
-      - mvn package
+      - ./run_maven.sh mvn package
 
 artifacts:
   files:

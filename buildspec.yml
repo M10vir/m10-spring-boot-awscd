@@ -9,26 +9,20 @@ phases:
       - yum -y install java-17-amazon-corretto-devel
       - echo "Installing Maven..."
       - yum -y install maven
+
   pre_build:
     commands:
-      - echo "Setting up environment variables script..."
-      - echo 'export JAVA_HOME=/usr/lib/jvm/java-17-amazon-corretto' > setenv.sh
-      - echo 'export PATH=$JAVA_HOME/bin:$PATH' >> setenv.sh
-      - echo 'echo JAVA_HOME is set to $JAVA_HOME' >> setenv.sh
-      - echo 'echo PATH is set to $PATH' >> setenv.sh
-      - echo 'echo Environment variables:' >> setenv.sh
-      - echo 'env' >> setenv.sh
-      - cat setenv.sh
-      - source setenv.sh
-      - echo "JAVA_HOME: $JAVA_HOME"
-      - echo "PATH: $PATH"
-      - echo "Maven version:"
-      - source setenv.sh && mvn --version
-      - ./verify-environment.sh
+      - echo "Setting JAVA_HOME and PATH..."
+      - export JAVA_HOME=/usr/lib/jvm/java-17-amazon-corretto
+      - export PATH=$JAVA_HOME/bin:$PATH
+      - echo "JAVA_HOME is set to $JAVA_HOME"
+      - echo "PATH is set to $PATH"
+      - echo "Checking Maven version..."
+      - java -version
+      - mvn --version
+
   build:
     commands:
-      - echo "Setting JAVA_HOME and PATH..."
-      - source setenv.sh
       - echo "Build started on `date`"
       - echo "Compiling the Maven project..."
       - mvn compile
@@ -36,6 +30,7 @@ phases:
       - mvn test
       - echo "Packaging the application..."
       - mvn package
+
 artifacts:
   files:
     - '**/*'

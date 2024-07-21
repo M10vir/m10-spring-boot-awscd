@@ -7,17 +7,17 @@ env:
 
 phases:
   install:
-    runtime-versions:
-      java: corretto17
     commands:
-      - echo "Updating packages..."
-      - sudo yum -y update
+      - echo "Updating package lists..."
+      - yum -y update
       - echo "Installing Amazon Corretto 17..."
-      - sudo yum -y install java-17-amazon-corretto-devel
+      - yum -y install java-17-amazon-corretto-devel
+      - echo "JAVA_HOME is set to $JAVA_HOME"
   build:
     commands:
       - echo "Building the project..."
       - mvn clean install
+
 artifacts:
   files:
     - target/demo-0.0.1-SNAPSHOT.jar
